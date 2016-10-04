@@ -1,0 +1,20 @@
+# -*- mode:makefile -*-
+#WARN = -Wall -Wextra
+OPTI = -O3
+#CXX = g++
+CXX = mpicxx
+#CXX = clang++
+OBJS = period.o AlgorithmPrimitivity.o
+#STD = -std=c++11
+LIB = -lMTToolBox -ltestu01
+CXXFLAGS = -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $(OPTI) \
+$(WARN) $(STD)
+
+crushes_tinymtW32:mpi_crushes_tinymtW32.cpp TinyMTX32.hpp crushes.hpp
+	$(CXX) $(CXXFLAGS) $(LIB) -o $@ mpi_crushes_tinymtW32.cpp
+
+crushes_tinymtX64:mpi_crushes_tinymtX64.cpp TinyMTX64.hpp crushes.hpp
+	$(CXX) $(CXXFLAGS) $(LIB) -o $@ mpi_crushes_tinymtX64.cpp
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c $<
