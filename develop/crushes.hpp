@@ -176,7 +176,7 @@ namespace MersenneTwister {
                 output_help(pgm);
                 return false;
             }
-            if ((argc < 3 && !u64) || (argc < 2 && u64)) {
+            if ((argc < 3 && !u64) || (argc < 1 && u64)) {
                 error = 1;
                 printf("mat1, mat2, tsh must be number\n");
             } else {
@@ -186,26 +186,22 @@ namespace MersenneTwister {
                         if (errno) {
                             break;
                         }
-                        opt.tsh = strtoul(argv[1], NULL, 10);
+                    } while (0);
+                } else {
+                    do {
+                        opt.mat1 = strtoul(argv[0], NULL, 16);
+                        if (errno) {
+                            break;
+                        }
+                        opt.mat2 = strtoul(argv[1], NULL, 16);
+                        if (errno) {
+                            break;
+                        }
+                        opt.tsh = strtoul(argv[2], NULL, 10);
                         if (errno) {
                             break;
                         }
                     } while (0);
-                } else {
-                do {
-                    opt.mat1 = strtoul(argv[0], NULL, 16);
-                    if (errno) {
-                        break;
-                    }
-                    opt.mat2 = strtoul(argv[1], NULL, 16);
-                    if (errno) {
-                        break;
-                    }
-                    opt.tsh = strtoul(argv[2], NULL, 10);
-                    if (errno) {
-                        break;
-                    }
-                } while (0);
                 }
                 if (errno) {
                     error = 1;
@@ -249,21 +245,6 @@ namespace MersenneTwister {
         int index;
         void test(char * name, G * prng, double_gen dgen, u32_gen ugen) {
             unif01_Gen *gen;
-#if 0
-            int small_test[] = {4, 5, 6, 10, -1};
-            int medium_test[] = {2, 6, 7, 8, 9, 10, 13, 15, 16, 17, 20, 23,
-                                 24, 26, 27, 28, 30, 32, 35, 36, 37, 38,
-                                 39, 40, 50, 55, 62, 66, 68, 80, 86, 88, 96,
-                                 -1};
-            int big_test[] = {1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 18, 19,
-                              20, 21, 22, 25, 30, 31, 32, 33, 34, 35, 42, 46,
-                              50, 59, 60, 61, 62, 64, 66, 67, 73, 75, 76,
-                              77, 79, 82, 86, 96, 97, 98, 102, 105, -1};
-#endif
-            //int medium_test[] = {10, 12, 42, -1};
-            //int rep[200];
-//      make_rep(rep, 200, medium_test);
-//      bbattery_RepeatCrush (gen, rep);
             test_init(prng);
             if (otype == 'd') {
                 gen = unif01_CreateExternGen01(name, dgen);
@@ -303,42 +284,7 @@ namespace MersenneTwister {
             buff = 0;
             index = 0;
         }
-#if 0
-        void make_rep(int rep[], int size, int src[]) {
-            for (int i = 0; i < size; i++) {
-                rep[i] = 0;
-            }
-            for (int i = 0; src[i] >= 0; i++) {
-                rep[src[i]] = 1;
-            }
-        }
-#endif
     };
 
-#define TEST_GENERATOR64(name, generator, opt) \
-        uint32_t name() { \
-            if (opt.otype == 'h') { \
-                return (uint32_t)(generator->generate() >> 32);\
-            } else if (opt.otype == 'l') { \
-                return (uint32_t)(generator->generate() \
-                                  & UINT32_C(0xffffffff));      \
-            } else if (opt.index == 0) { \
-                uint64_t x = generator->generate();\
-                opt.buff = x & UINT32_C(0xffffffff); \
-                opt.index = 1; \
-                return (uint32_t)(x >> 32); \
-            } else { \
-                opt.index = 0;\
-                return opt.buff;\
-            } \
-        }
-#if 0
-    uint32_t test_gen32() {
-        return generator.generate();
-    }
-    double test_gendouble() {
-        return generator.generate();
-    }
-#endif
 }
 #endif //CRUSHES_HPP

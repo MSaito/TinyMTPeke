@@ -1,23 +1,11 @@
 /**
  * @file tinymtX64dc.cpp
  *
- * @brief The main function of parameter generator of 64-bit Tiny
- * Mersenne Twister.
+ * @author Mutsuo Saito
  *
- * The functions in this file are simple. They parse the command line
- * options and call all_in_one function which does almost all things.
- * Users can change this file so that it fits to their applications
- * and OS.
- *
- * @author Mutsuo Saito (Hiroshima University)
- * @author Makoto Matsumoto (The University of Tokyo)
- *
- * Copyright (C) 2011 Mutsuo Saito, Makoto Matsumoto,
- * Hiroshima University and The University of Tokyo.
+ * Copyright (C) 2016 Mutsuo Saito
  * All rights reserved.
  *
- * The 3-clause BSD License is applied to this software, see
- * LICENSE.txt
  */
 #include <stdint.h>
 #include <inttypes.h>

@@ -12,15 +12,14 @@ using namespace std;
 
 TinyMTX64 *tinyx64;
 crushes<TinyMTX64> test;
-//TEST_GENERATOR64(test_generator, double, dsfmt, crushes);
 
 uint32_t test_generator() {
-    static int has_buffer = 0;
+    static bool has_buffer = 0;
     static uint32_t buffer = 0;
     uint64_t x;
     if (test.otype == 'm') {
         if (has_buffer) {
-            has_buffer = 0;
+            has_buffer = false;
             return buffer;
         } else {
             if (test.reverse) {
@@ -119,7 +118,7 @@ int main(int argc, char *argv[])
 
     tinyx64 = new TinyMTX64(test.matu64);
     char name[200];
-    sprintf(name, "TinyMTX64-%x-%" PRIx64, test.mat1);
+    sprintf(name, "TinyMTX64-%x-%" PRIx64, test.matu64);
     test.test(name, tinyx64, NULL, test_generator);
     delete tinyx64;
 

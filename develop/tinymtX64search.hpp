@@ -2,19 +2,15 @@
 #ifndef TINYMTX64SEARCH_HPP
 #define TINYMTX64SEARCH_HPP
 /**
- * @file tinymt64search.hpp
+ * @file tinymtX64search.hpp
  *
- * @brief TinyMT のDynamic Generator の重要部分
+ * @brief For TinyMTX64 Dynamic Generator
  *
  * @author Mutsuo Saito (Hiroshima University)
- * @author Makoto Matsumoto (The University of Tokyo)
  *
- * Copyright (C) 2013 Mutsuo Saito, Makoto Matsumoto
- * and Hiroshima University.
+ * Copyright (C) 2016 Mutsuo Saito
  * All rights reserved.
  *
- * The 3-clause BSD License is applied to this software, see
- * LICENSE.txt
  */
 
 #include <iostream>
@@ -28,35 +24,19 @@
 #include <MTToolBox/util.hpp>
 #include <MTToolBox/Sequential.hpp>
 
+#if defined(SIM_MUL)
+#include "sim_mul.h"
+#endif
 /**
  * @namespace tinymt
- * name space for tinymt64 and tinymt64
+ * name space for tinymtX64
  */
 namespace tinymt {
     using namespace MTToolBox;
     using namespace NTL;
     using namespace std;
 
-    /**
-     * テンパリングパラメータ探索方法
-     * - 疑似乱数生成器の出力の型は uint64_t
-     * - テンパリングパラメータのビット長は64ビット
-     * - テンパリングパラメータは１個
-     * - MSB から23ビットテンパリングする　（stlsb64 と合わせて64ビットテンパリング）
-     * - Searching parameters by 6 bits at once.
-     */
     //typedef AlgorithmRange<uint64_t, uint32_t, 64, 1, 63> st64;
-    //typedef AlgorithmRange<uint64_t, uint32_t, 64, 1, 1> st64;
-
-    /**
-     * - Tempering parameter searching algorithm.
-     * - Tempering for tinymt64.
-     * - The output of pseudo random number generator is 64 bits.
-     * - Tempering parameter is one unsigned 64-bit integer.
-     * - Tempering 9 bits from LSB.
-     * - Searching parameters by 5 bits at once.
-     */
-    //typedef AlgorithmPartialBitPattern<uint64_t, 64, 1, 9, 5, true> stlsb64;
 
     /**
      * @class tinymt64_param
@@ -256,6 +236,7 @@ namespace tinymt {
             mat1 ^= mat1 >> 19;
             mat2 ^= mat2 << 18;
             param.mat1 = (static_cast<uint64_t>(mat1) << 32) | mat2;
+            // After some trials, following parameters are fixed.
             param.sh1 = 26;
             param.sh2 = 19;
             param.tsh = 31;
@@ -272,7 +253,6 @@ namespace tinymt {
         /**
          * getter of recursion parameter
          * @param mat1 parameter mat1 is set after calling this method
-         * @param mat2 parameter mat2 is set after calling this method
          */
         void get_mat(uint64_t *mat1) const {
             *mat1 = param.mat1;
@@ -399,7 +379,6 @@ namespace tinymt {
             return reverse_bit_flag;
         }
     private:
-        //enum {sh0 = 1, sh1 = 10, sh8=8, status_size = 4, mexp = 128};
         enum {sh0 = 1, status_size = 2, mexp = 128};
         uint64_t status[2];
         tinymt64_param param;

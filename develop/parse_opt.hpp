@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PARSE_OPT_H
 #define PARSE_OPT_H
 /**
@@ -9,15 +10,11 @@
  * Users can change this file so that it fits to their applications
  * and OS, without serious influence on other programs of tinymtdc.
  *
- * @author Mutsuo Saito (Hiroshima University)
- * @author Makoto Matsumoto (The University of Tokyo)
+ * @author Mutsuo Saito
  *
- * Copyright (C) 2011 Mutsuo Saito, Makoto Matsumoto,
- * Hiroshima University and The University of Tokyo.
+ * Copyright (C) 2016 Mutsuo Saito
  * All rights reserved.
  *
- * The 3-clause BSD License is applied to this software, see
- * LICENSE.txt
  */
 
 #include <stdint.h>
@@ -27,7 +24,6 @@ class tinymt_options {
 public:
     bool verbose;
     bool all;
-    bool poptemper;
     std::string filename;
     uint32_t uid;
     long long count;

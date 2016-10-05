@@ -6,7 +6,6 @@ using namespace std;
 
 TinyMTX64 *tinyx64;
 crushes<TinyMTX64> test;
-//TEST_GENERATOR64(test_generator, double, dsfmt, crushes);
 
 uint32_t test_generator() {
     static int has_buffer = 0;

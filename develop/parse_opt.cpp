@@ -1,21 +1,6 @@
 /**
  * @file parse_opt.cpp
  *
- * @brief Command line option parser for tinymt32dc and tinymt64dc.
- *
- * Command line option parser for tinymt32dc and tinymt64dc.
- * Users can change this file so that it fits to their applications
- * and OS.
- *
- * @author Mutsuo Saito (Hiroshima University)
- * @author Makoto Matsumoto (The University of Tokyo)
- *
- * Copyright (C) 2011 Mutsuo Saito, Makoto Matsumoto,
- * Hiroshima University and The University of Tokyo.
- * All rights reserved.
- *
- * The 3-clause BSD License is applied to this software, see
- * LICENSE.txt
  */
 #include <unistd.h>
 #include <getopt.h>
@@ -45,7 +30,6 @@ bool parse_opt(tinymt_options& opt, int argc, char **argv, uint32_t start) {
     string pgm = argv[0];
     static struct option longopts[] = {
         {"verbose", no_argument, NULL, 'v'},
-        {"poptemper", no_argument, NULL, 'p'},
         {"all", no_argument, NULL, 'a'},
         {"file", required_argument, NULL, 'f'},
         {"start", required_argument, NULL, 's'},
@@ -58,10 +42,9 @@ bool parse_opt(tinymt_options& opt, int argc, char **argv, uint32_t start) {
     opt.max_delta = 100000;
     opt.start = start;
     opt.all = false;
-    opt.poptemper = false;
     errno = 0;
     for (;;) {
-        c = getopt_long(argc, argv, "vpas:m:f:c:", longopts, NULL);
+        c = getopt_long(argc, argv, "vas:m:f:c:", longopts, NULL);
         if (error) {
             break;
         }
@@ -74,9 +57,6 @@ bool parse_opt(tinymt_options& opt, int argc, char **argv, uint32_t start) {
             break;
         case 'v':
             opt.verbose = true;
-            break;
-        case 'p':
-            opt.poptemper = true;
             break;
         case 's':
             opt.start = strtoull(optarg, NULL, 0);
@@ -158,7 +138,6 @@ static void output_help(string& pgm, uint32_t start) {
         "                     down. If omitted ";
     static string help_string2 = " is assumed.\n"
 "--verbose, -v        Verbose mode. Output parameters, calculation time, etc.\n"
-"--poptemper, -p      PopTemper mode. Tempering by pop.\n"
 "--file, -f filename  Parameters are outputted to this file. without this\n"
 "                     option, parameters are outputted to standard output.\n"
 "--count, -c count    Output count. The number of parameters to be outputted.\n"
