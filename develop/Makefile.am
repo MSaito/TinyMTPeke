@@ -6,11 +6,12 @@ speed.hpp \
 TinyMTX64.hpp \
 tinymtX64search.hpp
 
-noinst_PROGRAMS = tinymtX64dc speed_tinymtX64 crushes_tinymtX64
+noinst_PROGRAMS = tinymtX64dc speed_tinymtX64 crushes_tinymtX64 sample
 
 tinymtX64dc_SOURCES = tinymtX64dc.cpp $(common_files)
 speed_tinymtX64_SOURCES = speed_tinymtX64.cpp $(common_files)
 crushes_tinymtX64_SOURCES = crushes_tinymtX64.cpp $(common_files)
+sample_SOURCES = sample.cpp $(common_files)
 
 crushes_tinymtX64_LDADD = -ltestu01
 LDADD = -lMTToolBox
