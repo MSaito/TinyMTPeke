@@ -19,12 +19,13 @@ AC_PROG_CC
 AC_PROG_INSTALL
 #AC_PROG_LIBTOOL
 
+AX_GCC_ARCHFLAG
+
+# keep this order
 AC_CHECK_LIB(gf2x, gf2x_mul)
 AC_CHECK_LIB(gmp, __gmpz_init)
 AC_CHECK_LIB(ntl, main,[],[ AC_MSG_ERROR(Need ntl) ])
-#not work
-#AX_CXX_CHECK_LIB(MTToolBox, [MTToolBox::get_mttoolbox_version],
-#  [],[ AC_MSG_ERROR(Need MTToolBox) ])
+AC_CHECK_LIB(MTToolBox, get_mttoolbox_version,[],[AC_MSG_ERROR(Need MTToolBox)])
 
 # Checks for header files.
 AC_HEADER_STDC

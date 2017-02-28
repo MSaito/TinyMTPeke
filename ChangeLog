@@ -1,3 +1,10 @@
+2017-02-28  Mutsuo Saito <saito@manieth.com>
+
+	* tinymtX64search.hpp for MTToolBox ver 1.0
+	* AlgorithmRange.hpp for MTToolBox ver 1.0
+	* tinymtX64dc.cpp for MTToolBox ver 1.0
+	* README.md add requirement
+
 2016-10-04  Mutsuo Saito <saito@manieth.com>
 
 	* README.md

@@ -27,12 +27,12 @@ namespace MTToolBox {
      * @class AlgorithmRange
      *
      */
-    template<typename U, typename V, int bit_len, int min, int max>
-    class AlgorithmRange : public AlgorithmTempering<U, V> {
+    template<typename U, int bit_len, int min, int max>
+    class AlgorithmRange : public AlgorithmTempering<U> {
     public:
         /**
          */
-        int operator()(TemperingCalculatable<U, V>& rand,
+        int operator()(TemperingCalculatable<U>& rand,
                        bool verbose = false) {
             using namespace std;
             if (verbose) {
@@ -58,7 +58,7 @@ namespace MTToolBox {
             return false;
         }
     private:
-        void make_temper_bit(TemperingCalculatable<U, V>& rand,
+        void make_temper_bit(TemperingCalculatable<U>& rand,
                              U mask,
                              int param_pos,
                              U pattern) {
@@ -68,7 +68,7 @@ namespace MTToolBox {
 
         /**
          */
-        int search_best_temper(TemperingCalculatable<U, V>& rand,
+        int search_best_temper(TemperingCalculatable<U>& rand,
                                bool verbose) {
             using namespace std;
             int bitSize = rand.bitSize();
@@ -116,9 +116,9 @@ namespace MTToolBox {
 
         /**
          */
-        int get_equidist(TemperingCalculatable<U, V>& rand,
+        int get_equidist(TemperingCalculatable<U>& rand,
                          int bit_length) {
-            AlgorithmEquidistribution<U, V> sb(rand, bit_length);
+            AlgorithmEquidistribution<U> sb(rand, bit_length);
             int veq[bit_length];
             int sum = sb.get_all_equidist(veq);
             return sum;

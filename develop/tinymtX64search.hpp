@@ -99,7 +99,7 @@ namespace tinymt {
      * but is not a subclass of some abstract class.
      * Instead, this class is passed to them as template parameters.
      */
-    class tinymt64 : public TemperingCalculatable<uint64_t, uint32_t> {
+    class tinymt64 : public TemperingCalculatable<uint64_t> {
     public:
         /**
          * Constructor by id.
@@ -121,7 +121,7 @@ namespace tinymt {
          * @param src The origin of copy.
          */
         tinymt64(const tinymt64& src) :
-            TemperingCalculatable<uint64_t, uint32_t>(),
+            TemperingCalculatable<uint64_t>(),
             param(src.param) {
             reverse_bit_flag = src.reverse_bit_flag;
             status[0] = src.status[0];
@@ -228,8 +228,8 @@ namespace tinymt {
          * internal id
          * @param num sequential number
          */
-        void setUpParam(AbstractGenerator<uint32_t>& sq32) {
-            uint32_t num = sq32.generate();
+        void setUpParam(ParameterGenerator& sq32) {
+            uint32_t num = sq32.getUint32();
             uint32_t work = num ^ (num << 15) ^ (num << 23);
             uint32_t mat1 = (work & 0xffff0000) | (param.id & 0xffff);
             uint32_t mat2 = (work & 0xffff) | (param.id & 0xffff0000);
@@ -305,7 +305,7 @@ namespace tinymt {
          * output function is GF(2)-linear.
          * @param that tinymt generator added to this generator
          */
-        void add(EquidistributionCalculatable<uint64_t, uint32_t>& other) {
+        void add(EquidistributionCalculatable<uint64_t>& other) {
             tinymt64* that = dynamic_cast<tinymt64 *>(&other);
             if (that == 0) {
                 throw std::invalid_argument(

@@ -69,14 +69,14 @@ int search(tinymt_options& opt, int count, AlgorithmPrimitivity& ap) {
         cout << "id:" << dec << opt.uid << endl;
     }
     int veq[64];
-    //AlgorithmRecursionAndTempering<uint64_t, uint32_t> all(sq, ap);
-    AlgorithmRecursionSearch<uint64_t, uint32_t> rec(g, sq, ap);
+    //AlgorithmRecursionAndTempering<uint64_t> all(sq, ap);
+    AlgorithmRecursionSearch<uint64_t> rec(g, sq, ap);
     //st64 st;
     int i = 0;
     while (i < count || opt.all) {
         if (rec.start(0x7fffff)) {
             //if (all.search(g, st, st, opt.verbose, cout, true)) {
-            AlgorithmEquidistribution<uint64_t, uint32_t> eq(g, 64);
+            AlgorithmEquidistribution<uint64_t> eq(g, 64);
             int delta = eq.get_all_equidist(veq);
             if (delta > opt.max_delta) {
                 continue;
@@ -84,7 +84,7 @@ int search(tinymt_options& opt, int count, AlgorithmPrimitivity& ap) {
             GF2X poly = rec.getMinPoly();
             int weight = NTL::weight(poly);
             g.setReverseOutput();
-            AlgorithmEquidistribution<uint64_t, uint32_t> equi(g, 64);
+            AlgorithmEquidistribution<uint64_t> equi(g, 64);
             int lsbdelta = equi.get_all_equidist(veq);
             g.resetReverseOutput();
             if (i == 0) {
